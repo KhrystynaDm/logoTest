@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="uk" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="format-detection" content="telephone=no"/>
+
+    <title>Pinkspit</title>
+    <meta name="description" content=""/>
+    <link href="assets/css/app.css" rel="stylesheet"/>
+</head>
+<body>
+<style>
+    body {
+        background: #333F47;
+    }
+
+    #context {
+        width: 400px;
+        height: 300px;
+        margin: auto;
+        position: relative;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+</style>
+
+
+<header class="header">
+    <div class="header-main container d-flex align-justify">
+        <a href="#" class="header-logo">
+            pinkspit
+        </a>
+        <div class="navbar">
+            <nav class="main-navigation">
+                <ul class="menu">
+                    <li class="menu-item  current-menu-item">
+                        <a href="">Page1</a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="">Page2</a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="">Page3</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="burger js-header">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+</header>
+
+<main class="main">
+    <section class="s-introduce">
+        <div class="container-fluid">
+            <div class="row align-center align-middle s-introduce__inner">
+                <div class="col-xl-7 col-lg-7 col-md-7 col-sm-12 col-xs-12 d-flex align-middle test">
+                    <div id="context"></div>
+                </div>
+                <div class="col-xl-5 col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                    <h1 class="s-introduce__heading">Lorem ipsum dolor sit amet. Pinkspit </h1>
+                    <div class="s-introduce__desc">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur maximus gravida est dapibus
+                        tincidunt.
+                        Etiam fermentum fringilla felis.
+                    </div>
+
+                    <button class="btn btn-primary">order</button>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="footer">
+    <div class="container">
+        <div class="row copyright">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">pinkspit ® 2022</div>
+
+        </div>
+    </div>
+</footer>
+
+<script src="assets/js/jquery-3.6.0.min.js"></script>
+<script src="assets/js/js_app.min.js"></script>
+
+
+<script src="assets/js//three.min.js"></script>
+<script src="assets/js//OrbitControls.js"></script>
+<script>
+
+    // Set up the scene, camera, and renderer as global variables.
+    var scene, camera, renderer;
+
+    init();
+    animate();
+
+    // Sets up the scene.
+    function init() {
+        // Create the scene and set the scene size.
+        scene = new THREE.Scene();
+        var WIDTH = 400,
+            HEIGHT = 300;
+        var container = document.getElementById('context');
+        // Create a renderer and add it to the DOM.
+        renderer = new THREE.WebGLRenderer({antialias: true});
+        renderer.setSize(WIDTH, HEIGHT);
+      //  document.body.appendChild(renderer.domElement);
+        //renderer.domElement.id = "context"
+
+        container.appendChild(renderer.domElement);
+
+
+        // Create a camera, zoom it out from the model a bit, and add it to the scene.
+        camera = new THREE.PerspectiveCamera(45, WIDTH / HEIGHT, 0.1, 20000);
+        camera.position.set(0, 6, 0);
+        scene.add(camera);
+
+        // Create a light, set its position, and add it to the scene.
+        var light = new THREE.PointLight(0xffffff);
+        light.position.set(-100, 200, 100);
+        scene.add(light);
+
+        // Add a white PointLight to the scene.
+        var loader = new THREE.JSONLoader();
+        loader.load('https://codepen.io/nickpettit/pen/nqyaK.js', function (geometry) {
+            var material = new THREE.MeshLambertMaterial({color: 0x55B663});
+            mesh = new THREE.Mesh(geometry, material);
+            scene.add(mesh);
+        });
+
+        // Add OrbitControls so that we can pan around with the mouse.
+        controls = new THREE.OrbitControls(camera, renderer.domElement);
+    }
+
+    // Renders the scene and updates the render as needed.
+    function animate() {
+        requestAnimationFrame(animate);
+        renderer.render(scene, camera);
+        controls.update();
+    }
+</script>
+
+
+
+</body>
+</html>
